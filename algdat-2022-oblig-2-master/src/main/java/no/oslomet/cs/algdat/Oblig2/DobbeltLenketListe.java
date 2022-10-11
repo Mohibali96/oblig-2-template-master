@@ -37,26 +37,71 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     private int endringer;         // antall endringer i listen
 
     public DobbeltLenketListe() {
-        throw new UnsupportedOperationException();
+        hode = null;
+        hale = null;
+        antall = 0;
+        endringer = 0;
+
     }
 
     public DobbeltLenketListe(T[] a) {
-        throw new UnsupportedOperationException();
+        // sjekker tabellen
+         if (a == null){
+             throw new NullPointerException();
+         }
+         if (a.length > 0){
+             int i = 0;
+             for (; i < a.length; i++){
+                 if (a [i] != null){
+                     hode = new Node<>(a[i]);
+                     antall ++;
+                     break;
+                 }
+             }
+             hale = hode;
+             if (hode != null){
+                 i++;
+                 for (; i < a.length; i++){
+                     if (a[i] != null){
+                         hale.neste = new Node<>(a[i], hale, null);
+                         hale = hale.neste;
+                         antall ++;
+                     }
+                 }
+             }
+         }
     }
 
     public Liste<T> subliste(int fra, int til) {
-        throw new UnsupportedOperationException();
+        kontoll(antall, fra, til);
+        Liste<T> subliste = new DobbeltLenketListe<>();
+        int lengde = til - fra;
+        if (lengde < 1){
+            return subliste;
+        }
+        Node<T> hjelpeNode = finnNode(fra);
+        while (lengde > 0){
+            subliste.leggInn(hjelpeNode.verdi);
+            hjelpeNode = hjelpeNode.neste;
+            lengde --;
+        }
+        return subliste;
     }
 
     @Override
     public int antall() {
-        throw new UnsupportedOperationException();
+       return antall;
     }
 
     @Override
     public boolean tom() {
-        throw new UnsupportedOperationException();
+        if (hode == null){
+            return true;
+        }else {
+            return false;
+        }
     }
+
 
     @Override
     public boolean leggInn(T verdi) {
@@ -71,6 +116,31 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     @Override
     public boolean inneholder(T verdi) {
         throw new UnsupportedOperationException();
+    }
+    private Node<T> finnNode(int indeks){
+        indeksKontroll(indeks, false);
+        Node<T> foreløpig;
+        if (indeks < antall / 2){
+            foreløpig = hode;
+            for (int i = 0; i < indeks; i++){
+                foreløpig = foreløpig.neste;
+            }
+            return foreløpig;
+        }else {
+            foreløpig = hale;
+            for (int i = antall-1; i > indeks; i--){
+                foreløpig = foreløpig.forrige;
+            }
+            return foreløpig;
+        }
+    }
+    private void kontoll (int tabellstørrelse, int fra, int til){
+        if (fra < 0 || til > tabellstørrelse){
+            throw new IndexOutOfBoundsException();
+        }
+        if (fra > til){
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
