@@ -10,7 +10,7 @@ I oppgaven har vi hatt følgende arbeidsfordeling:
 * Denne oppgaven er løst på egenhånd.
 
 # Oppgavebeskrivelse
-
-I oppgave 1 så gikk vi frem ved å ...
-
-I oppgave 2 så brukte vi en ... til å ...
+  Oppgave 1:
+Jeg lager en dobbeltlinket liste. Sjekker tabellen og kaster en exception hvis den er null. 
+Deretter velger jeg å gi hode en verdi og det er første ikke null verdien. 
+Jeg går gjennom alle ikke null verdier og setter halen til slutt. 
