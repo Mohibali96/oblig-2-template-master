@@ -132,23 +132,23 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean inneholder(T verdi) {
-        throw new UnsupportedOperationException();
+        return indeksTil(verdi) != -1;
     }
     private Node<T> finnNode(int indeks){
         indeksKontroll(indeks, false);
-        Node<T> foreløpig;
+        Node<T> temp;
         if (indeks < antall / 2){
-            foreløpig = hode;
+            temp = hode;
             for (int i = 0; i < indeks; i++){
-                foreløpig = foreløpig.neste;
+                temp = temp.neste;
             }
-            return foreløpig;
+            return temp;
         }else {
-            foreløpig = hale;
+            temp = hale;
             for (int i = antall-1; i > indeks; i--){
-                foreløpig = foreløpig.forrige;
+                temp = temp.forrige;
             }
-            return foreløpig;
+            return temp;
         }
     }
     private void kontoll (int tabellstørrelse, int fra, int til){
@@ -168,7 +168,16 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public int indeksTil(T verdi) {
-        throw new UnsupportedOperationException();
+        if (verdi == null){
+            return -1;
+        }
+        Node<T> temp = hode;
+        for (int i = 0; i < antall; i++, temp = temp.neste){
+            if (temp.verdi.equals(verdi)){
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
