@@ -221,12 +221,78 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean fjern(T verdi) {
-        throw new UnsupportedOperationException();
+        if (verdi == null){
+            return false;
+        }
+        Node<T> temp = hode;
+        if (verdi.equals(temp.verdi)){
+            if (temp.neste !=null){
+                hode = temp.neste;
+                hode.forrige = null;
+            } else{
+                hode = null;
+                hale = null;
+            }
+            antall --;
+            endringer ++;
+            return true;
+        }
+        temp = hale;
+        if (verdi.equals(temp.verdi)){
+            hale = temp.forrige;
+            hale.neste = null;
+            antall--;
+            endringer++;
+            return true;
+        }
+        temp = hode.neste;
+        for (; temp != null; temp = temp.neste){
+            if (verdi.equals(temp.verdi)){
+                temp.forrige.neste=temp.neste;
+                temp.neste.forrige=temp.forrige;
+                antall--;
+                endringer++;
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public T fjern(int indeks) {
-        throw new UnsupportedOperationException();
+        indeksKontroll(indeks,false);
+        Node<T> temp = hode;
+
+        T verdi;
+
+        if (indeks == 0){
+            verdi = temp.verdi;
+            if (temp.neste != null){
+                hode = temp.neste;
+                hode.forrige = null;
+            }
+            else{
+                hode = null;
+                hale = null;
+            }
+        }
+        else if (indeks == antall-1){
+            temp = hale;
+            verdi = hale.verdi;
+            hale = temp.forrige;
+            hale.neste = null;
+        } else {
+            for (int i = 0; i < indeks; i++){
+                temp = temp.neste;
+            }
+            verdi = temp.verdi;
+            temp.forrige.neste = temp.neste;
+            temp.neste.forrige = temp.forrige;
+        }
+        antall--;
+        endringer++;
+        return verdi;
+
     }
 
     @Override
