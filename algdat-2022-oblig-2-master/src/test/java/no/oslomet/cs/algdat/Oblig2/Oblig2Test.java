@@ -2,8 +2,6 @@ package no.oslomet.cs.algdat.Oblig2;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class Oblig2Test {
 
     ////// Oppgave 1 /////////////////////
